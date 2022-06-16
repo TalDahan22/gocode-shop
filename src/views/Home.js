@@ -1,11 +1,14 @@
 import React from "react";
-import "./App.css";
+import Products from "../components/products/Products";
+import Header from "../components/header/Header";
+import Cart from "../components/cart/Cart";
+import "../App.css";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
-import Home from "./views/Home";
-import ProductDetails from "./views/ProductDetails";
-const App = () => {
+import { useContext } from "react";
+import CartContext from "../components/context/CartContext";
+
+const Home = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [spinner, setSpinner] = useState(false);
@@ -42,20 +45,36 @@ const App = () => {
         ? products
         : products.filter((product) => product.category === category)
     );
-    // });
   };
 
   return (
-    <div className="App">
-      <Link to={'/'}>
-      go back to home page
-      </Link>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/products/:id" element={<ProductDetails />} />
-    </Routes>
-  </div>
+    <div>
+      <Header
+        categories={categories}
+        changeProducts={changeProducts}
+        products={products}
+      />
+      {!spinner ? (
+        <main className="spinner-examples">
+          <div className="example">
+            <span className="smooth spinner" />
+          </div>
+        </main>
+      ) : null}
+      <CartContext.Provider
+        value={{
+          cartArray: cartArray,
+          setCartArray: setCartArray,
+          updateCart: updateCart,
+          removeProduct: removeProduct,
+        }}
+      >
+        <Cart />
+
+        <Products products={products} />
+      </CartContext.Provider>
+    </div>
   );
 };
 
-export default App;
+export default Home;
