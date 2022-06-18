@@ -1,10 +1,17 @@
+import SliderProduct from "../sliderProduct/SliderProduct";
 import "./Header.css";
-const Header = ({ categories, changeProducts }) => {
+const Header = ({
+  categories,
+  changeProducts,
+  changeProductsSlider,
+  min,
+  max,
+}) => {
   console.log(categories);
 
-//   function showAgainBtn(event) {
-//     showAgain(event.target.value);
-//   }
+  //   function showAgainBtn(event) {
+  //     showAgain(event.target.value);
+  //   }
 
   function changeProductsHolder(event) {
     changeProducts(event.target.value);
@@ -44,12 +51,17 @@ const Header = ({ categories, changeProducts }) => {
             <option value="/">Date, old to new</option>
           </select>
         </div>
-      
-      <div>
-        <button>cart</button>
-      </div>
-      
-      
+
+        <div>
+          <button>cart</button>
+        </div>
+        <div>
+          <SliderProduct
+            changeProductsSlider={changeProductsSlider}
+            min={min}
+            max={max}
+          ></SliderProduct>
+        </div>
       </div>
     </nav>
   );

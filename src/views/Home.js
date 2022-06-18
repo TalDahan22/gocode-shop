@@ -7,28 +7,36 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import CartContext from "../components/context/CartContext";
+import { Man } from "@mui/icons-material";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [spinner, setSpinner] = useState(false);
   const [cartArray, setCartArray] = useState([]);
+  const [orginalProducts, setOriginalProducts] = useState([]);
+  const [min, setMin] = useState([]);
+  const [max, setMax] = useState([]);
 
   useEffect(() => {
     fetch("https://bedecked-stone-turret.glitch.me/products")
       .then((res) => res.json())
       .then((products) => {
         setProducts(products);
+        setOriginalProducts(products);
         setSpinner(true);
+        setMin(Math.min(...products.map(({ price }) => price)));
+        setMax(Math.max(...products.map(({ price }) => price)));
         setCategories(
           products
-            .map((p) => p.category)
-            .filter((value, index, array) => array.indexOf(value) === index)
-        );
-      });
-  }, []);
-
-  function updateCart(id) {
+          .map((p) => p.category)
+          .filter((value, index, array) => array.indexOf(value) === index)
+          );
+        });
+      }, []);
+      console.log(min,max);
+  
+      function updateCart(id) {
     console.log("products", products);
     const newItem = products.find((product) => product.id === id);
     setCartArray([...cartArray, newItem]);
@@ -42,17 +50,27 @@ const Home = () => {
   const changeProducts = (category) => {
     setProducts(
       category === "allProducts"
-        ? products
-        : products.filter((product) => product.category === category)
+        ? orginalProducts
+        : orginalProducts.filter((product) => product.category === category)
     );
   };
 
+  const changeProductsSlider = (range) => {
+    const min = range[0];
+    const max = range[1];
+    setProducts(
+      orginalProducts.filter(({ price }) => price > min && price < max)
+    );
+  };
   return (
     <div>
       <Header
         categories={categories}
         changeProducts={changeProducts}
         products={products}
+        changeProductsSlider={changeProductsSlider}
+        min={min}
+        max={max}
       />
       {!spinner ? (
         <main className="spinner-examples">
@@ -70,7 +88,6 @@ const Home = () => {
         }}
       >
         <Cart />
-
         <Products products={products} />
       </CartContext.Provider>
     </div>
