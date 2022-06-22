@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import CartContext from "../components/context/CartContext";
 import { Man } from "@mui/icons-material";
+import CardProduct from "./CardProduct";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -29,14 +30,14 @@ const Home = () => {
         setMax(Math.max(...products.map(({ price }) => price)));
         setCategories(
           products
-          .map((p) => p.category)
-          .filter((value, index, array) => array.indexOf(value) === index)
-          );
-        });
-      }, []);
-      console.log(min,max);
-  
-      function updateCart(id) {
+            .map((p) => p.category)
+            .filter((value, index, array) => array.indexOf(value) === index)
+        );
+      });
+  }, []);
+  console.log(min, max);
+
+  function updateCart(id) {
     console.log("products", products);
     const newItem = products.find((product) => product.id === id);
     setCartArray([...cartArray, newItem]);
@@ -72,6 +73,7 @@ const Home = () => {
         min={min}
         max={max}
       />
+      <CardProduct />
       {!spinner ? (
         <main className="spinner-examples">
           <div className="example">
