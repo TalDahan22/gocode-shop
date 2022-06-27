@@ -22,7 +22,7 @@ const Home = () => {
   const [showDrawer, setShowDrawer] = useState(false);
 
   useEffect(() => {
-    fetch("https://bedecked-stone-turret.glitch.me/products")
+    fetch("/api/products")
       .then((res) => res.json())
       .then((products) => {
         setProducts(products);

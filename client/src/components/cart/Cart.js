@@ -3,8 +3,7 @@ import CartContext from "../context/CartContext";
 import Product from "../product/Product";
 import "./Cart.css";
 const Cart = () => {
-  const [cartArray, removeProduct] = useContext(CartContext);
-  console.log(CartContext);
+  const { cartArray, removeProduct } = useContext(CartContext);
   console.log("cartArray", cartArray);
 
   return cartArray.map((product) => {

@@ -2,21 +2,20 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Card from "@mui/material/Card";
 import { CardContent, CardHeader, CardMedia, Grid } from "@mui/material";
-import { flexbox } from "@mui/system";
+// import { flexbox } from "@mui/system";
 import "./productDetails.css";
 
 const ProductDetails = (updateCart) => {
   const [products, setProducts] = useState([]);
-  const [spinner, setSpinner] = useState(false);
+
   const { id } = useParams();
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/${id}`)
+    fetch(`/api/products/${id}`)
       .then((res) => res.json())
       .then((product) => {
         setProducts(product);
-        setSpinner(true);
       });
-  }, []);
+  }, [id]);
 
   return (
     <Grid container justifyContent={"center"}>
