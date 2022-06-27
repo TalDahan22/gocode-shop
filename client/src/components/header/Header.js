@@ -6,6 +6,7 @@ const Header = ({
   changeProductsSlider,
   min,
   max,
+  setShowDrawer,
 }) => {
   console.log(categories);
 
@@ -53,14 +54,14 @@ const Header = ({
         </div>
 
         <div>
-          <button>cart</button>
-        </div>
-        <div>
           <SliderProduct
             changeProductsSlider={changeProductsSlider}
             min={min}
             max={max}
           ></SliderProduct>
+          <div>
+            <button onClick={() => setShowDrawer(true)}>cart</button>
+          </div>
         </div>
       </div>
     </nav>

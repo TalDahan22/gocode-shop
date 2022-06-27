@@ -8,7 +8,8 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import CartContext from "../components/context/CartContext";
 import { Man } from "@mui/icons-material";
-import CardProduct from "./CardProduct";
+import { Drawer } from "@mui/material";
+import CartDrawer from "../components/drawer/CartDrawer";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -18,6 +19,7 @@ const Home = () => {
   const [orginalProducts, setOriginalProducts] = useState([]);
   const [min, setMin] = useState([]);
   const [max, setMax] = useState([]);
+  const [showDrawer, setShowDrawer] = useState(false);
 
   useEffect(() => {
     fetch("https://bedecked-stone-turret.glitch.me/products")
@@ -65,6 +67,7 @@ const Home = () => {
   };
   return (
     <div>
+      <CartDrawer setShowDrawer={setShowDrawer} showDrawer={showDrawer} />
       <Header
         categories={categories}
         changeProducts={changeProducts}
@@ -72,8 +75,9 @@ const Home = () => {
         changeProductsSlider={changeProductsSlider}
         min={min}
         max={max}
+        setShowDrawer={setShowDrawer}
       />
-      <CardProduct />
+
       {!spinner ? (
         <main className="spinner-examples">
           <div className="example">
