@@ -3,13 +3,15 @@ import express from "express";
 import mongoose from "mongoose";
 const app = express();
 app.use(express.json());
+app.use(express.static("client/build"));
+dotenv.config();
+
+const PORT = process.env.PORT || 8000;
+const url = process.env.MONGO_URI || "mongodb://localhost:27017";
 
 app.get("/", (req, res) => {
   res.send("hi");
 });
-const PORT = process.env.PORT || 8000;
-const url = process.env.MONGO_URI || "mongodb://localhost:27017";
-dotenv.config();
 // app.get("/api/products", (req, res) => {
 //   fsp
 //     .readFile("./api/products.json", "utf8")
@@ -80,12 +82,12 @@ app.get("/api/products", (req, res) => {
       res.send(afterFilterProducts);
     });
   } else {
-    res.send("HI HI HI");
+    res.send(products);
   }
 });
 
 app.get("*", (req, res) => {
-  res.sendFile("/client/build/index.html");
+  res.sendFile("client/build/index.html");
 });
 
 const { DB_PASS, DB_NAME, DB_USER, DB_HOST } = process.env;
@@ -97,6 +99,7 @@ const Product = mongoose.model("Product", {
   category: String,
   image: String,
 });
+
 mongoose
   .connect(`mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}`)
   .then(() => {
