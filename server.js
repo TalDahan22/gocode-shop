@@ -9,7 +9,7 @@ dotenv.config();
 const PORT = process.env.PORT || 8000;
 const url = process.env.MONGO_URI || "mongodb://localhost:27017";
 
-app.get("/", (req, res) => {
+app.get("/api/", (req, res) => {
   res.send("hi");
 });
 // app.get("/api/products", (req, res) => {
