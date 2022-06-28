@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 const app = express();
 app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("hi");
 });
@@ -78,6 +79,8 @@ app.get("/api/products", (req, res) => {
 
       res.send(afterFilterProducts);
     });
+  } else {
+    res.send("HI HI HI");
   }
 });
 
