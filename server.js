@@ -82,7 +82,7 @@ app.get("/api/products", (req, res) => {
       res.send(afterFilterProducts);
     });
   } else {
-    res.send(products);
+    res.send(afterFilterProducts);
   }
 });
 
